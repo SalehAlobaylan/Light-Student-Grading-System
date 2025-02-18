@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/styles.css">
+    <title>Edit Student</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-light">
+        <div class="container">
+            <a class="navbar-brand" href="/front-end/index.html">
+                <img src="/images/logo.png" alt="Logo" style="width: 40px;">
+            </a>
+            <h6>CS346 Course</h6>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/front-end/index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/front-end/add.html">Add Student</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h1>Edit Student</h1>
+        <form id="edit-student-form">
+            <div class="mb-3">
+                <label for="studentId" class="form-label">Student ID</label>
+                <input type="text" class="form-control" id="studentId" required>
+            </div>
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" required>
+            </div>
+            <div class="mb-3">
+                <label for="quiz" class="form-label">Quiz Marks</label>
+                <input type="number" class="form-control" id="quiz" required>
+            </div>
+            <div class="mb-3">
+                <label for="midterm" class="form-label">Midterm Marks</label>
+                <input type="number" class="form-control" id="midterm" required>
+            </div>
+            <div class="mb-3">
+                <label for="project" class="form-label">Project Marks</label>
+                <input type="number" class="form-control" id="project" required>
+            </div>
+            <div class="mb-3">
+                <label for="finalExam" class="form-label">Final Exam Marks</label>
+                <input type="number" class="form-control" id="finalExam" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Update Student</button>
+        </form>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const studentId = params.get('id');
+
+        async function fetchStudentData() {
+            const response = await fetch(`/api/students/${studentId}`);
+            const student = await response.json();
+            document.getElementById('studentId').value = student.studentId;
+            document.getElementById('name').value = student.name;
+            document.getElementById('quiz').value = student.quiz;
+            document.getElementById('midterm').value = student.midterm;
+            document.getElementById('project').value = student.project;
+            document.getElementById('finalExam').value = student.finalExam;
+        }
+
+        document.getElementById('edit-student-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const studentId = document.getElementById('studentId').value;
+            const name = document.getElementById('name').value;
+            const quiz = document.getElementById('quiz').value;
+            const midterm = document.getElementById('midterm').value;
+            const project = document.getElementById('project').value;
+            const finalExam = document.getElementById('finalExam').value;
+
+            await fetch(`/edit/${studentId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ studentId, name, quiz, midterm, project, finalExam }),
+            });
+
+            window.location.href = '/';
+        });
+
+        fetchStudentData();
+    </script>
+</body>
+</html>
