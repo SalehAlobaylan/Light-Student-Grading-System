@@ -1,5 +1,5 @@
 {
-  "name": "student-grading-system",
+  "name": "studentgradingsystem",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -12,6 +12,7 @@
     "vue": "^3.5.13"
   },
   "devDependencies": {
+    "@types/estree": "^1.0.7",
     "@vitejs/plugin-vue": "^5.2.3",
     "vite": "^6.2.4",
     "vite-plugin-vue-devtools": "^7.7.2"
