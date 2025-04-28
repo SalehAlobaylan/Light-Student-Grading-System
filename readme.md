@@ -1,4 +1,4 @@
-# Light Student Grading System
+# Light Student Grading System (old)
 
 ### used MongoDB for Database
 ### NodeJs / ExpressJs for BackEnd
